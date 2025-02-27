@@ -20,11 +20,9 @@ app.use(cors());
 app.use(morgan('dev'));
 
 //라우터와 연결
-app.use('/', indexRouter);
+
 app.use('/api/users', userRouter);
-app.use('/api/posts', postRouter);
 app.use('/api/auth', loginRouter);
-app.use('/admin', adminRouter);
 
 //서버 가동
 app.listen(port, () => {

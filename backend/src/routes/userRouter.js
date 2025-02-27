@@ -15,9 +15,9 @@ router.post('/', userController.createUser);
 router.post(`/duplex`, userController.duplicatedEmail);
 
 //회원 삭제 요청
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', userController.deleteTransaction);
 
 //회원 수정 요청
-router.put(`/:id`, userController.updateUser);
+router.put(`/:id`, userController.updateTransaction);
 
 module.exports = router;
