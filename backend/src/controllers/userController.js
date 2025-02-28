@@ -8,8 +8,9 @@ exports.createUser = async (req, res) => {
         return res.status(400).json({ message: '이름,이메일,비밀번호 모두 입력해야 해요' });
     }
     const userData = [name, email, passwd];
+
     //sql문을 준비
-    const sql = `insert into members(name,email,passwd) values(?,?,?)`;
+    const sql = `insert into people(name,email,passwd) values(?,?,?)`;
     try {
         const [result] = await pool.query(sql, userData);
         console.log('result: ', result);
@@ -59,6 +60,7 @@ exports.listUser = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
 //특정 회원 조회
 exports.getUser = async (req, res) => {
     try {
@@ -70,6 +72,7 @@ exports.getUser = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
 // /api/users/:id
 //회원정보 삭제 : deleteUser 함수 구성
 exports.deleteUser = async (req, res) => {
@@ -90,8 +93,6 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
-//회원정보 수정 : updateUser 함수 구성
-// 회원정보 수정 : updateUser 함수 구성
 //회원정보 수정 : updateUser 함수 구성
 exports.updateUser = async (req, res) => {
     const { id } = req.params; // put /api/users/10
