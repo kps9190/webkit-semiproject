@@ -1,5 +1,61 @@
 // userController.js
 const pool = require('../models/dbPool');
+// /api/users/:id
+
+//U
+exports.updateTransaction = async (req, res) => {
+    const { id } = req.params; // /:id
+    const { type, amount, category, description, date } = req.body;
+    const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
+    //const userId = req.userId;
+    // // transaction테이블의 user_id jwt토큰에서 가져와야함
+
+    console.log('요청된 거래 ID:', id);
+    console.log('요청된 사용자 ID:', userId);
+    try {
+        const [result] = await pool.query('select * from transactions where id = ? and user_id = ?', [id, userId]);
+        if (!result.length) {
+            // 0이면 일치하는 데이터 존재 x
+            return res.status(403).json({ message: '수정 권한이 없습니다.' });
+        }
+        const [ret] = await pool.query(
+            'update transactions set type=?, amount=?, category=?, description=?, date=? where id = ?',
+            [type, amount, category, description, date, id]
+        );
+        if (ret.affectedRows === 0) {
+            return res.status(404).json({ message: '거래 내역을 찾을 수 없습니다.' });
+        }
+        res.json({ message: '거래 내역이 수정되었습니다.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
+
+//D
+exports.deleteTransaction = async (req, res) => {
+    const { id } = req.params;
+    // const userId = req.userId;
+    const { userId } = req.body;
+    try {
+        const [result] = await pool.query('select * from transactions where id = ? and user_id = ?', [id, userId]);
+        if (!result.length) {
+            // 0이면 일치하는 데이터 존재 x
+            return res.status(403).json({ message: '삭제 권한이 없습니다.' });
+        }
+        const [ret] = await pool.query('DELETE FROM transactions WHERE id = ?', [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: '거래 내역을 찾을 수 없습니다.' });
+        }
+        res.json({ message: '거래 내역이 삭제되었습니다.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
+
+//////////////////////////////////////////
 
 //회원가입 처리 메서드
 exports.createUser = async (req, res) => {
