@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
+import './index.css'; // Make sure this file exists and is correctly styled
+import Dashboard from './Dashboard.jsx';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const root = createRoot(document.getElementById('root'));
+
+root.render(
+    <FluentProvider theme={webLightTheme}>
+        <Dashboard />
+    </FluentProvider>,
+);

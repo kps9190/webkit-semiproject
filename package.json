@@ -6,15 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint frontend",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fluentui/react": "^8.122.11",
+    "@fluentui/react-charts-preview": "^0.2.0",
+    "@fluentui/react-components": "^9.60.0",
+    "@fluentui/react-icons": "^2.0.274",
+    "@fluentui/react-image": "^9.1.80",
+    "@fluentui/react-text": "^9.4.32",
+    "@fluentui/web-components": "^3.0.0-beta.81",
     "bootstrap": "^5.3.3",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
