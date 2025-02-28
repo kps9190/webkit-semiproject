@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require('../controllers/transactionController');
 // server.js에서
 // /api/users ===>userRouter와 연결
 //모든 회원 조회
