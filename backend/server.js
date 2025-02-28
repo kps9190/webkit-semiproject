@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 //라우터 가져오기
-const userRouter = require('./src/routes/userRouter');
+const userRouter = require('./src/routes/transactionRouter');
 const loginRouter = require('./src/routes/loginRouter');
 
 const port = process.env.PORT || 7777;
@@ -20,11 +20,9 @@ app.use(cors());
 app.use(morgan('dev'));
 
 //라우터와 연결
-app.use('/', indexRouter);
-app.use('/api/users', userRouter);
-app.use('/api/posts', postRouter);
+
+app.use('/api/transaction', transactionRouter);
 app.use('/api/auth', loginRouter);
-app.use('/admin', adminRouter);
 
 //서버 가동
 app.listen(port, () => {
