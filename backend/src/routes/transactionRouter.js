@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require('../controllers/transactionController');
 // server.js에서
 // /api/users ===>userRouter와 연결
 //모든 회원 조회
@@ -15,9 +15,9 @@ router.post('/', userController.createUser);
 router.post(`/duplex`, userController.duplicatedEmail);
 
 //회원 삭제 요청
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', userController.deleteTransaction);
 
 //회원 수정 요청
-router.put(`/:id`, userController.updateUser);
+router.put(`/:id`, userController.updateTransaction);
 
 module.exports = router;
