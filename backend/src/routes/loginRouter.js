@@ -3,7 +3,7 @@ const express = require('express');
 const loginController = require('../controllers/loginController');
 const router = express.Router();
 
-const verifyMiddleware = require('../middlewares/authMildleware');
+const verifyMiddleware = require('../middlewares/authMiddleware');
 
 // /api/auth/login
 router.post('/login', loginController.login);
