@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 //라우터 가져오기
-const userRouter = require('./src/routes/transactionRouter');
+const transactionRouter = require('./src/routes/transactionRouter');
 const loginRouter = require('./src/routes/loginRouter');
 
 const port = process.env.PORT || 7777;
