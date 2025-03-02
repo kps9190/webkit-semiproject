@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
     const { email, passwd } = req.body;
     console.log(`email: ${email}, passwd: ${passwd}`);
     try {
-        const sql = 'select id,name,email from members where email=? and passwd=?';
+        const sql = 'select id,name,email from users where email=? and passwd=?';
 
         const [result] = await pool.query(sql, [email, passwd]);
         console.log('result: ', result);
@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
         //console.log('refreshToken: ', refreshToken);
 
         //members테이블에 refreshToken값(null===>발급받은 refreshtoken으로)을 수정해줘야 한다
-        const sql2 = 'update members set refreshtoken =? where id=?';
+        const sql2 = 'update users set refreshtoken =? where id=?';
         await pool.query(sql2, [refreshToken, user.id]);
 
         res.json({ result: 'success', data: user, message: '로그인 성공!!', accessToken, refreshToken });
@@ -55,7 +55,7 @@ exports.refreshVerify = (req, res) => {
         }
         //제대로 인증된 토큰 일 경우
         //DB에서 해당 user정보 가져오기
-        const sql = `select id,name,email from members where refreshToken=?`;
+        const sql = `select id,name,email from users where refreshToken=?`;
         const [result] = await pool.query(sql, [refreshToken]);
         if (result.length === 0) {
             return res.status(403).json({ message: '인증받지 않은 회원입니다' });
@@ -71,7 +71,7 @@ exports.logout = async (req, res) => {
     const { email } = req.body;
     //refreshToken값을 null로 수정
     try {
-        const sql = `update members set refreshToken=null where email=?`;
+        const sql = `update users set refreshToken=null where email=?`;
         const [result] = await pool.query(sql, [email]);
         if (result.affectedRows > 0) {
             res.json({ result: 'success', message: '로그아웃 처리 되었습니다' });

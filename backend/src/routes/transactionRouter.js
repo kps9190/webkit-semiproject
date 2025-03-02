@@ -1,23 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/transactionController');
-// server.js에서
-// /api/users ===>userRouter와 연결
-//모든 회원 조회
-router.get('/', userController.listUser);
-//특정 회원 조회
-router.get('/:id', userController.getUser);
-//회원 등록 요청
-router.post('/', userController.createUser);
+const transactionController = require('../controllers/transactionController');
+//지출/수입 내역 추가
+router.post('/', transactionController.insertTransaction);
+//사용자의 전체 내역 조회
+router.get('/', transactionController.listTransaction);
+//특정 내역 조회 (GET /transactions/:id)
+router.get('/:id', transactionController.getTransaction);
+//내역 수정
 
-//회원 등록 또는 수정시 아이디(email) 중복 체크
-// post /api/users/duplex    email값은 request의 body에 포함되어 들어감
-router.post(`/duplex`, userController.duplicatedEmail);
-
-//회원 삭제 요청
-router.delete('/:id', userController.deleteTransaction);
-
-//회원 수정 요청
-router.put(`/:id`, userController.updateTransaction);
+router.put(`/:id`, transactionController.updateTransaction);
+//내역 삭제
+router.delete('/:id', transactionController.deleteTransaction);
 
 module.exports = router;
