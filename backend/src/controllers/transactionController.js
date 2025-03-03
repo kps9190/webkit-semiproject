@@ -3,7 +3,7 @@ const pool = require('../models/dbPool');
 
 //C
 exports.insertTransaction = async (req, res) => {
-    const { user_id: userId, type, amount, category, description, date } = req.body; // ✅ `userId`를 Body에서 받음 (테스트용)
+    const { userId, type, amount, category, description, date } = req.body; // ✅ `userId`를 Body에서 받음 (테스트용)
     // const {userId} = req.userId;
     console.log(userId, type, amount, category, description, date);
 
@@ -121,6 +121,70 @@ exports.deleteTransaction = async (req, res) => {
             return res.status(404).json({ message: '거래 내역을 찾을 수 없습니다.' });
         }
         res.json({ message: '거래 내역이 삭제되었습니다.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
+
+exports.getTransactionsByCategory = async (req, res) => {
+    // const userId = req.userId;  // JWT에서 `userId` 가져오기
+    const { category, userId } = req.query; // URL의 `query parameter`에서 `category` 가져오기
+
+    console.log('요청된 사용자 ID:', userId);
+    console.log('요청된 카테고리:', category);
+
+    if (!userId) {
+        return res.status(400).json({ message: 'userId가 필요합니다.' });
+    }
+
+    try {
+        let query = 'SELECT type, amount, category, description, date FROM transactions WHERE user_id = ?';
+        let queryParams = [userId];
+
+        if (category) {
+            query += ' AND category = ?';
+            queryParams.push(category);
+        }
+
+        const [result] = await pool.query(query, queryParams);
+
+        if (!result.length) {
+            return res.status(404).json({ message: '해당 카테고리의 거래 내역이 없습니다.' });
+        }
+
+        return res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
+
+exports.getTransactionsByMonth = async (req, res) => {
+    // const userId = req.userId;  // JWT에서 userId 가져오기
+    const { year, month, userId } = req.query; // 쿼리 파라미터에서 year, month 가져오기
+
+    console.log('요청된 사용자 ID:', userId);
+    console.log('요청된 년도:', year);
+    console.log('요청된 월:', month);
+
+    if (!year || !month) {
+        return res.status(400).json({ message: 'year와 month 값을 입력해야 합니다.' });
+    }
+    try {
+        const query = `
+            SELECT type, amount, category, description, date 
+            FROM transactions 
+            WHERE user_id = ? 
+            AND DATE_FORMAT(date, '%Y-%m') = ?`;
+
+        const [result] = await pool.query(query, [userId, `${year}-${month}`]);
+
+        if (!result.length) {
+            return res.status(404).json({ message: '해당 월의 거래 내역이 없습니다.' });
+        }
+
+        return res.status(200).json(result);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: '서버 오류' });
