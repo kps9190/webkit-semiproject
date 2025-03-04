@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import * as FluentUI from "@fluentui/react-components";
+import { Button } from "@fluentui/react-components";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 
-const DashboardContent = () => {
+const DashBoardContentExample = () => {
     const [count, setCount] = useState(0);
 
     return (
@@ -19,9 +19,9 @@ const DashboardContent = () => {
 
     <h1>Vite + React</h1>
     <div className="card">
-        <FluentUI.Button onClick={() => setCount((count) => count + 1)}>
+        <Button onClick={() => setCount((count) => count + 1)}>
             count is {count}
-        </FluentUI.Button>
+        </Button>
         <p>
             Edit <code>src/App.jsx</code> and save to test HMR
         </p>
@@ -34,4 +34,4 @@ const DashboardContent = () => {
 );
 };
 
-export default DashboardContent;
+export default DashBoardContentExample;

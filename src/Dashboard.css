@@ -1,58 +1,32 @@
-#root {
-  max-width: 1280px;
-  padding: 2rem;
-  text-align: center;
-}
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-.card {
-  padding: 2em;
-}
-.read-the-docs {
-  color: #888;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 전체 컨테이너: Flexbox로 구성 */
 .container {
   display: flex;
-  height: 100vh;
-  width:100vh;/* 전체 화면 높이 */
+  height: 100%;
+  width: 100%;/* 전체 화면 높이 */
+  overflow: hidden;
+  flex-grow: 1;
 }
 
 /* 왼쪽 메뉴 (파란색 배경) */
 .sidebar {
-  width: 30%; /* 화면의 20% 차지 */
+  max-width: 20%;
   background-color: #b4d6fa;
-  color: white; /* 글자색 흰색 */
+  flex-shrink: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: left;
-  text-align: center;
-  font-size: 1.5rem;
+  padding: 5px;
+  margin: 5px;
+  overflow: auto;
+  height: 100vh;
+  min-width: 200px;
 }
 
 /* 오른쪽 본문 (흰색 배경) */
@@ -65,4 +39,17 @@
   justify-content: center;
   text-align: center;
   padding: 20px;
+  overflow: auto;
+  flex-grow: 1; /* Take up ALL remaining space */
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* 필요 시 세로 방향 정렬 */
+  align-items: stretch; /* 내부 요소가 부모 크기를 가득 차게 함 */
+  justify-content: flex-start; /* 필요 시 위쪽부터 배치 */
+  overflow: hidden; /* 불필요한 스크롤 방지 */
 }
