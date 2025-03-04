@@ -1,7 +1,7 @@
-import { bundleIcon } from "@fluentui/react-icons";
-import * as FluentIcon from "@fluentui/react-icons";
-import * as FluentUI from "@fluentui/react-components";
-import { useState } from "react";
+import { bundleIcon } from '@fluentui/react-icons';
+import * as FluentIcon from '@fluentui/react-icons';
+import * as FluentUI from '@fluentui/react-components';
+import { useState } from 'react';
 
 const LeftSideBar = () => {
     const [checkedDashboard, setCheckedDashboard] = useState(false);
@@ -12,30 +12,12 @@ const LeftSideBar = () => {
     const [checkedSignout, setCheckedSignout] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false); // 모달 상태
 
-    const DashboardIcon = bundleIcon(
-        FluentIcon.DataTreemapFilled,
-        FluentIcon.DataTreemapRegular
-    );
-    const MoneyIcon = bundleIcon(
-        FluentIcon.ReceiptMoneyFilled,
-        FluentIcon.ReceiptMoneyRegular
-    );
-    const CalendarIcon = bundleIcon(
-        FluentIcon.CalendarMonthFilled,
-        FluentIcon.CalendarMonthRegular
-    );
-    const SettingsIcon = bundleIcon(
-        FluentIcon.SettingsFilled,
-        FluentIcon.SettingsRegular
-    );
-    const SigninIcon = bundleIcon(
-        FluentIcon.PersonArrowRightFilled,
-        FluentIcon.PersonArrowRightRegular
-    );
-    const SignoutIcon = bundleIcon(
-        FluentIcon.PersonArrowLeftFilled,
-        FluentIcon.PersonArrowLeftRegular
-    );
+    const DashboardIcon = bundleIcon(FluentIcon.DataTreemapFilled, FluentIcon.DataTreemapRegular);
+    const MoneyIcon = bundleIcon(FluentIcon.ReceiptMoneyFilled, FluentIcon.ReceiptMoneyRegular);
+    const CalendarIcon = bundleIcon(FluentIcon.CalendarMonthFilled, FluentIcon.CalendarMonthRegular);
+    const SettingsIcon = bundleIcon(FluentIcon.SettingsFilled, FluentIcon.SettingsRegular);
+    const SigninIcon = bundleIcon(FluentIcon.PersonArrowRightFilled, FluentIcon.PersonArrowRightRegular);
+    const SignoutIcon = bundleIcon(FluentIcon.PersonArrowLeftFilled, FluentIcon.PersonArrowLeftRegular);
 
     return (
         <>
@@ -45,7 +27,10 @@ const LeftSideBar = () => {
                     checked={checkedDashboard}
                     icon={checkedDashboard ? <DashboardIcon /> : <FluentIcon.DataTreemapRegular />}
                     onClick={() => setCheckedDashboard((prev) => !prev)}
-                    style={{ fontSize: 30, padding: "1em", margin: "1px" }}>Dashboard</FluentUI.ToggleButton>
+                    style={{ fontSize: 30, padding: '1em', margin: '1px' }}
+                >
+                    Dashboard
+                </FluentUI.ToggleButton>
             </div>
             <hr />
             <div>
@@ -54,7 +39,10 @@ const LeftSideBar = () => {
                     checked={checkedMoney}
                     icon={checkedMoney ? <MoneyIcon /> : <FluentIcon.ReceiptMoneyRegular />}
                     onClick={() => setCheckedMoney((prev) => !prev)}
-                    style={{ fontSize: 30, padding: "1em", margin: "1px" }}>Income/Outcome</FluentUI.ToggleButton>
+                    style={{ fontSize: 20, padding: '10%', margin: '1px' }}
+                >
+                    Income/Outcome
+                </FluentUI.ToggleButton>
             </div>
             <hr />
             <div>
@@ -63,7 +51,10 @@ const LeftSideBar = () => {
                     checked={checkedCalendar}
                     icon={checkedCalendar ? <CalendarIcon /> : <FluentIcon.CalendarMonthRegular />}
                     onClick={() => setCheckedCalendar((prev) => !prev)}
-                    style={{ fontSize: 30, padding: "1em", margin: "1px" }}>Calendar</FluentUI.ToggleButton>
+                    style={{ fontSize: 30, padding: '1em', margin: '1px' }}
+                >
+                    Calendar
+                </FluentUI.ToggleButton>
             </div>
             <hr />
             <div>
@@ -72,7 +63,9 @@ const LeftSideBar = () => {
                     checked={checkedSetting}
                     icon={checkedSetting ? <SettingsIcon /> : <FluentIcon.SettingsRegular />}
                     onClick={() => setCheckedSetting((prev) => !prev)}
-                    style={{ fontSize: 30, padding: "1em", margin: "1px"}}>Setting
+                    style={{ fontSize: 30, padding: '1em', margin: '1px' }}
+                >
+                    Setting
                 </FluentUI.ToggleButton>
             </div>
             <hr />
@@ -81,12 +74,21 @@ const LeftSideBar = () => {
                     appearance="transparent"
                     checked={checkedSignin}
                     icon={
-                        checkedSignin
-                            ? <SigninIcon style={{ fontSize: 50 }} />
-                            : <FluentIcon.PersonArrowRightRegular style={{ fontSize: 50, padding: "1px", margin: "1px" }} />
+                        checkedSignin ? (
+                            <SigninIcon style={{ fontSize: 50 }} />
+                        ) : (
+                            <FluentIcon.PersonArrowRightRegular
+                                style={{ fontSize: 50, padding: '1px', margin: '1px' }}
+                            />
+                        )
                     }
-                    onClick={() => { setShowSignIn(true); setCheckedSignin(prev => !prev);}}
-                    style={{ fontSize: 30, padding: "1em", margin: "1px" }}>Login
+                    onClick={() => {
+                        setShowSignIn(true);
+                        setCheckedSignin((prev) => !prev);
+                    }}
+                    style={{ fontSize: 30, padding: '1em', margin: '1px' }}
+                >
+                    Login
                 </FluentUI.ToggleButton>
                 {/* SignIn 모달 */}
                 {showSignIn && (

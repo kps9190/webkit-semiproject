@@ -1,7 +1,7 @@
-import "./Dashboard.css";
-import LeftSideBar from "./LeftSideBar.jsx";
-import DashBoardContent from "./DashBoardContent.jsx";
-
+import './Dashboard.css';
+import LeftSideBar from './LeftSideBar.jsx';
+import DashBoardContent from './DashBoardContent.jsx';
+import Login from './Login.jsx';
 
 // Dashboard 컴포넌트
 function Dashboard() {
@@ -11,13 +11,10 @@ function Dashboard() {
                 <LeftSideBar />
             </aside>
             <main className="content">
-                <DashBoardContent />
+                <Login />
             </main>
         </div>
     );
 }
 
 export default Dashboard;
-
-
-
