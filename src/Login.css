@@ -40,6 +40,7 @@
     width: 100%; /*전체 너비*/
     height: 40px; /*버튼 그룹 높이*/
     margin-top: 25px; /*버튼 그룹 위쪽 여백*/
+    gap: 10px;
 }
 
 .login-find {

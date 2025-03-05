@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Label } from '@fluentui/react-components';
-import { Input } from '@fluentui/react-components';
+import { useNavigate, Link } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 import './Login.css';
 import axios from 'axios';
 
@@ -59,24 +58,39 @@ export default function Login(onClick) {
         <div className="login-container">
             <h1>로그인</h1>
             <div className="box">
-                <Label className="login-label1">아이디</Label>
-                <Input type="text" name="id" className="login-input" value={id} onChange={onChange} placeholder="ID" />
+                <Form.Label className="login-label1">아이디</Form.Label>
+                <Form.Control
+                    type="text"
+                    name="id"
+                    className="login-input"
+                    value={id}
+                    onchange={onChange}
+                    placeholder="ID"
+                />
             </div>
             <div className="box">
-                <Label className="login-label">비밀번호</Label>
-                <Input
+                <Form.Label className="login-label">비밀번호</Form.Label>
+                <Form.Control
                     type="password"
                     name="pwd"
-                    className="login-input"
+                    className="login-pwd"
                     value={pwd}
-                    onChange={onChange}
+                    onchange={onchange}
                     placeholder="Password"
-                />
+                ></Form.Control>
             </div>
             <Button className="login-button" onClick={handleLogin} style={{ backgroundColor: '#96c6fa' }}>
                 로그인
             </Button>
             <div className="button-group">
+                <Button
+                    appearance="secondary"
+                    className="login-find"
+                    shape="circular"
+                    style={{ backgroundColor: '#96c6fa' }}
+                >
+                    회원가입
+                </Button>
                 <Button
                     appearance="secondary"
                     className="login-find"
