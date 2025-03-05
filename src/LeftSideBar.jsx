@@ -1,10 +1,10 @@
 import { bundleIcon } from "@fluentui/react-icons";
-import PropTypes from "prop-types";
 import * as FluentIcon from "@fluentui/react-icons";
 import * as FluentUI from "@fluentui/react-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LeftSideBar = ({ setActiveContent }) => {
+const LeftSideBar = () => {
     const [checked, setChecked] = useState({
         dashboard: true,
         money: false,
@@ -27,9 +27,9 @@ const LeftSideBar = ({ setActiveContent }) => {
 
     const DashboardIcon = bundleIcon(FluentIcon.DataTreemapFilled, FluentIcon.DataTreemapRegular);
     const MoneyIcon = bundleIcon(FluentIcon.ReceiptMoneyFilled, FluentIcon.ReceiptMoneyRegular);
-    const CalendarIcon = bundleIcon(FluentIcon.CalendarMonthFilled, FluentIcon.CalendarMonthRegular);
     const SettingsIcon = bundleIcon(FluentIcon.SettingsFilled, FluentIcon.SettingsRegular);
     const SigninIcon = bundleIcon(FluentIcon.PersonArrowRightFilled, FluentIcon.PersonArrowRightRegular);
+    const navigate = useNavigate();
 
     return (
         <div className="sidebar">
@@ -38,7 +38,7 @@ const LeftSideBar = ({ setActiveContent }) => {
                 checked={checked.dashboard}
                 icon={<DashboardIcon />}
                 onClick={() => {
-                    setActiveContent("DashBoardContent");
+                    navigate("/");
                     toggleCheck("dashboard");
                 }}
                 className="sidebar-button"
@@ -47,11 +47,10 @@ const LeftSideBar = ({ setActiveContent }) => {
             </FluentUI.ToggleButton>
 
             <FluentUI.ToggleButton
-                appearance="primary"
                 checked={checked.money}
                 icon={<MoneyIcon />}
                 onClick={() => {
-                    setActiveContent("IncomeOutcome");
+                    navigate("/IncomeOutcome");
                     toggleCheck("money");
                 }}
                 className="sidebar-button"
@@ -60,20 +59,13 @@ const LeftSideBar = ({ setActiveContent }) => {
             </FluentUI.ToggleButton>
 
             <FluentUI.ToggleButton
-                appearance="outline"
-                checked={checked.calendar}
-                icon={<CalendarIcon />}
-                onClick={() => toggleCheck("calendar")}
-                className="sidebar-button"
-            >
-                Calendar
-            </FluentUI.ToggleButton>
-
-            <FluentUI.ToggleButton
                 appearance="subtle"
                 checked={checked.setting}
                 icon={<SettingsIcon />}
-                onClick={() => toggleCheck("setting")}
+                onClick={() => {
+                    navigate("/Settings");
+                    toggleCheck("setting")
+                }}
                 className="sidebar-button"
             >
                 Setting
@@ -84,6 +76,7 @@ const LeftSideBar = ({ setActiveContent }) => {
                 checked={checked.signin}
                 icon={<SigninIcon />}
                 onClick={() => {
+                    navigate("/SignIn");
                     setShowSignIn(true);
                     toggleCheck("signin");
                 }}
@@ -99,10 +92,6 @@ const LeftSideBar = ({ setActiveContent }) => {
             )}
         </div>
     );
-};
-
-LeftSideBar.propTypes = {
-    setActiveContent: PropTypes.func.isRequired, // setActiveContent는 필수 함수
 };
 
 export default LeftSideBar;

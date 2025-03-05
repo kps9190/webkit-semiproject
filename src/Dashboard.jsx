@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./Dashboard.css";
 import LeftSideBar from "./LeftSideBar.jsx";
 import DashBoardContent from "./DashBoardContent.jsx";
@@ -6,24 +6,21 @@ import IncomeOutcome from "./IncomeOutcome.jsx";
 
 
 function Dashboard() {
-    const [activeContent, setActiveContent] = useState("DashBoardContent");
 
     return (
         <div className="container">
-            {/* Sidebar for navigation */}
-            <aside className="sidebar">
-                <LeftSideBar setActiveContent={setActiveContent} />
-            </aside>
+        <aside className="sidebar">
+        <LeftSideBar/>
+</aside>
 
-            {/* Main content area - dynamically rendered */}
             <main className="content">
-                {activeContent === "DashBoardContent" && <DashBoardContent />}
-                {activeContent === "IncomeOutcome" && <IncomeOutcome />}
-                {/*{activeContent === "Calendar" && <Calendar />}*/}
-                {/*{activeContent === "Login" && <Login />}*/}
-
-
-            </main>
+                <Routes>
+                <Route path="/" element={<DashBoardContent />} />
+                <Route path="/IncomeOutcome" element={<IncomeOutcome />} />
+                {/*<Route path="/SignUp" element={<SignUp />} />*/}
+                {/*<Route path="/SignIn" element={<SignIn />} />*/}
+                </Routes>
+                </main>
         </div>
     );
 }
