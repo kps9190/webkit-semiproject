@@ -63,7 +63,6 @@ const LeftSideBar = () => {
                 checked={checked.setting}
                 icon={<SettingsIcon />}
                 onClick={() => {
-                    navigate("/SignUp");
                     toggleCheck("setting")
                 }}
                 className="sidebar-button"
@@ -83,12 +82,6 @@ const LeftSideBar = () => {
             >
                 Login
             </FluentUI.ToggleButton>
-
-            {showSignIn && (
-                <div className="modal">
-                    <button onClick={() => setShowSignIn(false)}>Close</button>
-                </div>
-            )}
         </div>
     );
 };

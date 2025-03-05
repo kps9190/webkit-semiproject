@@ -3,8 +3,8 @@ import "./Dashboard.css";
 import LeftSideBar from "./LeftSideBar.jsx";
 import DashBoardContent from "./DashBoardContent.jsx";
 import IncomeOutcome from "./IncomeOutcome.jsx";
-import SignUp from "./SignUp.jsx";
 import Login from "./Login.jsx";
+import SignUp from "./SignUp.jsx"
 
 
 

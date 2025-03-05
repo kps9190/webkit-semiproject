@@ -4,11 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import './Login.css';
 import axios from 'axios';
+import SignUp from './SignUp.jsx'
 
 export default function Login(onClick) {
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -90,6 +91,9 @@ export default function Login(onClick) {
                     className="login-find"
                     shape="circular"
                     style={{ backgroundColor: '#96c6fa' }}
+                    onClick={() => {
+                        navigate("/SignUp");
+                    }}
                 >
                     회원가입
                 </Button>
