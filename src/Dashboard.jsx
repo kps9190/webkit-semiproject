@@ -3,6 +3,10 @@ import "./Dashboard.css";
 import LeftSideBar from "./LeftSideBar.jsx";
 import DashBoardContent from "./DashBoardContent.jsx";
 import IncomeOutcome from "./IncomeOutcome.jsx";
+import SignUp from "./SignUp.jsx";
+import Login from "./Login.jsx";
+
+
 
 
 function Dashboard() {
@@ -17,8 +21,8 @@ function Dashboard() {
                 <Routes>
                 <Route path="/" element={<DashBoardContent />} />
                 <Route path="/IncomeOutcome" element={<IncomeOutcome />} />
-                {/*<Route path="/SignUp" element={<SignUp />} />*/}
-                {/*<Route path="/SignIn" element={<SignIn />} />*/}
+                <Route path="/SignUp" element={<SignUp />} />
+                <Route path="/Login" element={<Login />} />
                 </Routes>
                 </main>
         </div>

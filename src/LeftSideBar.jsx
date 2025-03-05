@@ -10,7 +10,7 @@ const LeftSideBar = () => {
         money: false,
         calendar: false,
         setting: false,
-        signin: false,
+        login: false,
     });
 
     const [showSignIn, setShowSignIn] = useState(false);
@@ -21,14 +21,14 @@ const LeftSideBar = () => {
             money: key === "money",
             calendar: key === "calendar",
             setting: key === "setting",
-            signin: key === "signin"
+            login: key === "login"
         }));
     };
 
     const DashboardIcon = bundleIcon(FluentIcon.DataTreemapFilled, FluentIcon.DataTreemapRegular);
     const MoneyIcon = bundleIcon(FluentIcon.ReceiptMoneyFilled, FluentIcon.ReceiptMoneyRegular);
     const SettingsIcon = bundleIcon(FluentIcon.SettingsFilled, FluentIcon.SettingsRegular);
-    const SigninIcon = bundleIcon(FluentIcon.PersonArrowRightFilled, FluentIcon.PersonArrowRightRegular);
+    const LoginIcon = bundleIcon(FluentIcon.PersonArrowRightFilled, FluentIcon.PersonArrowRightRegular);
     const navigate = useNavigate();
 
     return (
@@ -63,7 +63,7 @@ const LeftSideBar = () => {
                 checked={checked.setting}
                 icon={<SettingsIcon />}
                 onClick={() => {
-                    navigate("/Settings");
+                    navigate("/SignUp");
                     toggleCheck("setting")
                 }}
                 className="sidebar-button"
@@ -73,12 +73,11 @@ const LeftSideBar = () => {
 
             <FluentUI.ToggleButton
                 appearance="transparent"
-                checked={checked.signin}
-                icon={<SigninIcon />}
+                checked={checked.login}
+                icon={<LoginIcon />}
                 onClick={() => {
-                    navigate("/SignIn");
-                    setShowSignIn(true);
-                    toggleCheck("signin");
+                    navigate("/Login");
+                    toggleCheck("login");
                 }}
                 className="sidebar-button"
             >
