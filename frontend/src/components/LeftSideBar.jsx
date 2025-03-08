@@ -1,8 +1,9 @@
-import { bundleIcon } from "@fluentui/react-icons";
-import * as FluentIcon from "@fluentui/react-icons";
-import * as FluentUI from "@fluentui/react-components";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { bundleIcon } from '@fluentui/react-icons';
+import * as FluentIcon from '@fluentui/react-icons';
+import * as FluentUI from '@fluentui/react-components';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './member/AuthContext';
 
 const LeftSideBar = () => {
     const [checked, setChecked] = useState({
@@ -15,13 +16,15 @@ const LeftSideBar = () => {
 
     const [showSignIn, setShowSignIn] = useState(false);
 
+    const { user, loginAuthUser } = useContext(AuthContext);
+
     const toggleCheck = (key) => {
         setChecked((prev) => ({
-            dashboard: key === "dashboard",
-            money: key === "money",
-            calendar: key === "calendar",
-            setting: key === "setting",
-            login: key === "login"
+            dashboard: key === 'dashboard',
+            money: key === 'money',
+            calendar: key === 'calendar',
+            setting: key === 'setting',
+            login: key === 'login',
         }));
     };
 
@@ -38,8 +41,8 @@ const LeftSideBar = () => {
                 checked={checked.dashboard}
                 icon={<DashboardIcon />}
                 onClick={() => {
-                    navigate("/");
-                    toggleCheck("dashboard");
+                    navigate('/');
+                    toggleCheck('dashboard');
                 }}
                 className="sidebar-button"
             >
@@ -50,8 +53,8 @@ const LeftSideBar = () => {
                 checked={checked.money}
                 icon={<MoneyIcon />}
                 onClick={() => {
-                    navigate("/IncomeOutcome");
-                    toggleCheck("money");
+                    navigate('/IncomeOutcome');
+                    toggleCheck('money');
                 }}
                 className="sidebar-button"
             >
@@ -63,7 +66,7 @@ const LeftSideBar = () => {
                 checked={checked.setting}
                 icon={<SettingsIcon />}
                 onClick={() => {
-                    toggleCheck("setting")
+                    toggleCheck('setting');
                 }}
                 className="sidebar-button"
             >
@@ -75,12 +78,12 @@ const LeftSideBar = () => {
                 checked={checked.login}
                 icon={<LoginIcon />}
                 onClick={() => {
-                    navigate("/Login");
-                    toggleCheck("login");
+                    navigate('/Login');
+                    toggleCheck('login');
                 }}
                 className="sidebar-button"
             >
-                Login
+                {user ? 'Logout' : 'Login'}
             </FluentUI.ToggleButton>
         </div>
     );

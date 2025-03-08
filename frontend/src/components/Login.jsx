@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import './Login.css';
+import './css/Login.css';
 import axios from 'axios';
-import SignUp from './SignUp.jsx';
+import { AuthContext } from './member/AuthContext';
 
 export default function Login(onClick) {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const navigate = useNavigate();
+    const { loginAuthUser } = useContext(AuthContext);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -22,7 +23,7 @@ export default function Login(onClick) {
 
     const handleLogin = async () => {
         if (email === '') {
-            alert('아이디를 입력하세요.');
+            alert('이메일을 입력하세요.');
             return;
         }
         if (pwd === '') {
@@ -30,21 +31,25 @@ export default function Login(onClick) {
             return;
         }
 
-        console.log('로그인 시도:', { username: email, password: pwd });
+        // console.log('로그인 시도:', { username: email, password: pwd });
 
         try {
-            const response = await axios.post('http://localhost:', {
-                username: email,
-                password: pwd,
+            const response = await axios.post('http://localhost:7777/api/auth/login', {
+                email: email,
+                passwd: pwd,
                 //백엔드에 req.bodt로 값을 받을수있으면 밑에 코드 사용
                 // email: email,
                 // pwd: pwd,
             });
 
             if (response.status === 200) {
-                alert('로그인 성공');
-                // navigate('/Dashboard');
-                onClick();
+                const authUser = response.data.data;
+                alert(response.data.data.name + '님 안녕하세요');
+                loginAuthUser(authUser);
+                const { accessToken, refreshToken } = response.data;
+                sessionStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                navigate('/');
             } else {
                 alert('로그인 실패: ' + response.data.message);
             }
@@ -61,7 +66,7 @@ export default function Login(onClick) {
         <div className="login-container">
             <h1>로그인</h1>
             <div className="box">
-                <Form.Label className="login-label1">아이디</Form.Label>
+                <Form.Label className="login-label1">이메일</Form.Label>
                 <Form.Control
                     type="text"
                     name="email"

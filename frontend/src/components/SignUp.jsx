@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import './SignUp.css';
+import './css/SignUp.css';
 import axios from 'axios';
 
 export default function SignUp() {

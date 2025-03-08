@@ -8,7 +8,6 @@ export const AuthContext = createContext({ id: '', name: '', email: '' });
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-
     //로그인에 성공하면 loginAuthUser(authUser)를 호출
     const loginAuthUser = (userInfo) => {
         console.log(userInfo.name);
