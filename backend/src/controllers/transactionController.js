@@ -3,8 +3,8 @@ const pool = require('../models/dbPool');
 
 //C
 exports.insertTransaction = async (req, res) => {
-    const { userId, type, amount, category, description, date } = req.body; // ✅ `userId`를 Body에서 받음 (테스트용)
-    // const {userId} = req.userId;
+    const { type, amount, category, description, date } = req.body; // `userId`를 Body에서 받음 (테스트용)
+    const userId = req.user.id;
     console.log(userId, type, amount, category, description, date);
 
     if (!userId || !type || !amount || !category || !date) {
@@ -30,14 +30,32 @@ exports.insertTransaction = async (req, res) => {
 
 //R
 exports.listTransaction = async (req, res) => {
-    const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
-    //const userId = req.userId;
+    // const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
+    const userId = req.user.id;
     if (!userId) {
         return res.status(400).json({ message: 'userId가 필요합니다.' });
     }
     try {
         const [ret] = await pool.query(
-            'select type, amount, category, description, date from transactions where user_id=?',
+            'select id, type, amount, category, description, date from transactions where user_id=? order by date desc',
+            [userId]
+        );
+        return res.status(200).json({ ret });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
+
+exports.expenseTransaction = async (req, res) => {
+    // const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
+    const userId = req.user.id;
+    if (!userId) {
+        return res.status(400).json({ message: 'userId가 필요합니다.' });
+    }
+    try {
+        const [ret] = await pool.query(
+            'select id, type, amount, category, description, date from transactions where user_id=? and type="지출" order by date desc',
             [userId]
         );
         return res.status(200).json({ ret });
@@ -48,8 +66,8 @@ exports.listTransaction = async (req, res) => {
 };
 
 exports.getTransaction = async (req, res) => {
-    const { id } = req.params; // ✅ URL에서 거래 ID 가져오기
-    const { userId } = req.body; // ✅ Postman 테스트를 위해 Body에서 `userId` 받기 (JWT 적용 후 수정 필요)
+    const { id } = req.params; // URL에서 거래 ID 가져오기
+    const { userId } = req.body; // Postman 테스트를 위해 Body에서 `userId` 받기 (JWT 적용 후 수정 필요)
     console.log('요청된 거래 ID:', id);
     console.log('요청된 사용자 ID:', userId);
     if (!id) {
@@ -67,7 +85,7 @@ exports.getTransaction = async (req, res) => {
         if (!result.length) {
             return res.status(404).json({ message: '거래 내역을 찾을 수 없습니다.' });
         }
-        return res.status(200).json(result); // ✅ 첫 번째 결과만 반환
+        return res.status(200).json(result); // 첫 번째 결과만 반환
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: '서버 오류' });
@@ -78,8 +96,8 @@ exports.getTransaction = async (req, res) => {
 exports.updateTransaction = async (req, res) => {
     const { id } = req.params; // /:id
     const { type, amount, category, description, date } = req.body;
-    const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
-    //const userId = req.userId;
+    // const { userId } = req.body; // postman 테스트를 위해 body로 userId 전달해줌
+    const userId = req.user.id;
     // // transaction테이블의 user_id jwt토큰에서 가져와야함
 
     console.log('요청된 거래 ID:', id);
@@ -107,8 +125,7 @@ exports.updateTransaction = async (req, res) => {
 //D
 exports.deleteTransaction = async (req, res) => {
     const { id } = req.params;
-    // const userId = req.userId;
-    const { userId } = req.body;
+    const userId = req.user.id;
     try {
         const [result] = await pool.query('select * from transactions where id = ? and user_id = ?', [id, userId]);
         if (!result.length) {

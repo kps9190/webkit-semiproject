@@ -1,8 +1,8 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 const morgan = require('morgan');
 const path = require('path');
-const cors = require('cors');
 
 //라우터 가져오기
 const userRouter = require('./src/routes/userRouter');

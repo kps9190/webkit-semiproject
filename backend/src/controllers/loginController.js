@@ -44,28 +44,47 @@ exports.login = async (req, res) => {
 };
 
 //refreshToken을 검증하여 타당할 경우 새 accessToken을 발급하는 메서드
-exports.refreshVerify = (req, res) => {
-    const { refreshToken } = req.body;
-    if (!refreshToken) return res.status(401).json({ message: 'refresh token이 없어요' });
+exports.refreshVerify = async (req, res) => {
+    try {
+        console.log('토큰 검증 시작중....');
+        const { refreshToken } = req.body;
+        console.log('🔍 받은 RefreshToken:', refreshToken);
 
-    jwt.verify(refreshToken, process.env.REFRESH_SECRET, async (err, decoded) => {
-        if (err) {
-            //인증받지 못한 토큰일 경우
-            return res.status(403).json({ message: 'Invalid Refresh Token' });
+        if (!refreshToken) {
+            console.warn('Refresh Token이 없습니다.');
+            return res.status(401).json({ message: 'Refresh Token이 없습니다.' });
         }
-        //제대로 인증된 토큰 일 경우
-        //DB에서 해당 user정보 가져오기
-        const sql = `select id,name,email from users where refreshToken=?`;
-        const [result] = await pool.query(sql, [refreshToken]);
-        if (result.length === 0) {
-            return res.status(403).json({ message: '인증받지 않은 회원입니다' });
-        }
-        const user = result[0];
-        //새 accessToken 발급
-        const newAccessToken = generateToken(user, process.env.ACCESS_SECRET, '15m');
-        res.json({ accessToken: newAccessToken });
-    });
+
+        jwt.verify(refreshToken, process.env.REFRESH_SECRET, async (err, decoded) => {
+            if (err) {
+                console.error('Invalid Refresh Token:', err);
+                return res.status(403).json({ message: 'Invalid Refresh Token' });
+            }
+
+            console.log('✅ Refresh Token 검증 성공:', decoded);
+
+            const sql = `SELECT id, name, email FROM users WHERE refreshtoken = ?`;
+            const [result] = await pool.query(sql, [refreshToken]);
+
+            if (result.length === 0) {
+                console.warn('⚠️ DB에서 해당 RefreshToken을 가진 유저를 찾을 수 없음');
+                return res.status(403).json({ message: '인증받지 않은 회원입니다' });
+            }
+
+            const user = result[0];
+
+            // 새 Access Token 발급
+            const newAccessToken = generateToken(user, process.env.ACCESS_SECRET, '15m');
+            console.log('✅ 새 Access Token 발급:', newAccessToken);
+
+            return res.json({ accessToken: newAccessToken });
+        });
+    } catch (error) {
+        console.error('Refresh Token 검증 중 오류 발생:', error);
+        return res.status(500).json({ message: '서버 오류 발생' });
+    }
 };
+
 //----------------------
 exports.logout = async (req, res) => {
     const { email } = req.body;
