@@ -1,0 +1,70 @@
+/* 전체 컨테이너 */
+.login-container {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    background-color: #ebf3fc;
+    margin: 0 auto;
+}
+
+/* 입력 필드 박스 (이름, 아이디, 비밀번호) */
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* 입력 필드와 버튼 사이 간격 */
+    height: 50px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* 이름 입력 필드만 간격 다르게 설정 */
+.namebox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 50px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* 입력 필드 라벨 */
+.login-label,
+.login-label1,
+.login-label2 {
+    font-weight: bold;
+    min-width: 90px; /* 라벨 크기 일정하게 유지 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    text-align: center;
+}
+
+/* 입력 필드 스타일 */
+.login-input {
+    flex-grow: 1; /* 남은 공간을 자동으로 차지 */
+    width: 100%;
+    max-width: 350px; /* 최대 너비 제한 */
+    padding: 8px;
+    box-sizing: border-box; /* 패딩 포함 크기 조정 */
+}
+
+/* 중복체크 버튼 */
+.check {
+    padding: 8px 15px;
+    background-color: #0c3b5e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0; /* 버튼 크기 고정 */
+}
+
+/* 회원가입 버튼 */
+.login-button {
+    width: 100%;
+    height: 50px;
+    background-color: #96c6fa;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
