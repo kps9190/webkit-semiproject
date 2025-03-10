@@ -61,13 +61,13 @@ exports.refreshVerify = async (req, res) => {
                 return res.status(403).json({ message: 'Invalid Refresh Token' });
             }
 
-            console.log('✅ Refresh Token 검증 성공:', decoded);
+            console.log('Refresh Token 검증 성공:', decoded);
 
             const sql = `SELECT id, name, email FROM users WHERE refreshtoken = ?`;
             const [result] = await pool.query(sql, [refreshToken]);
 
             if (result.length === 0) {
-                console.warn('⚠️ DB에서 해당 RefreshToken을 가진 유저를 찾을 수 없음');
+                console.warn('DB에서 해당 RefreshToken을 가진 유저를 찾을 수 없음');
                 return res.status(403).json({ message: '인증받지 않은 회원입니다' });
             }
 
@@ -75,7 +75,7 @@ exports.refreshVerify = async (req, res) => {
 
             // 새 Access Token 발급
             const newAccessToken = generateToken(user, process.env.ACCESS_SECRET, '15m');
-            console.log('✅ 새 Access Token 발급:', newAccessToken);
+            console.log('새 Access Token 발급:', newAccessToken);
 
             return res.json({ accessToken: newAccessToken });
         });
